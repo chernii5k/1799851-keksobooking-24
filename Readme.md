@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Евгений Марков](https://up.htmlacademy.ru/javascript/24/user/1799851).
-* Наставник: `Неизвестно`.
+* Наставник: [Дмитрий Смирнов](https://htmlacademy.ru/profile/7mirnoff).
 
 ---
 
