@@ -16,14 +16,15 @@ console.log(getRandomNumber(10, 100));
 
 // Задание №2.
 
-function getRandomArbitrary(min, max) {
+function getRandomArbitrary(min, max, precision) {
   if (max < min || max === min) {
     return ('Неверно задан диапазон! Укажите другие числа.');
   }
 
-  return Math.random() * (max - min) + min;
+  const random = Math.random() * (max - min) + min;
+
+  return random.toFixed(precision);
 }
 
-const TOTAL_VALUE = getRandomArbitrary(10, 100);
-console.log(TOTAL_VALUE.toFixed(1));
+console.log(getRandomArbitrary(10, 100, 5));
 
