@@ -12,7 +12,7 @@ function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
 }
 
-// console.log(getRandomNumber(10, 100));
+console.log(getRandomNumber(10, 100));
 
 // Задание №2.
 
@@ -25,5 +25,5 @@ function getRandomArbitrary(min, max) {
 }
 
 const TOTAL_VALUE = getRandomArbitrary(10, 100);
-// console.log(TOTAL_VALUE.toFixed(1))
+console.log(TOTAL_VALUE.toFixed(1));
 
