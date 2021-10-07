@@ -12,8 +12,6 @@ function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
 }
 
-console.log(getRandomNumber(10, 100));
-
 // Задание №2.
 
 function getRandomArbitrary(min, max, precision) {
@@ -25,8 +23,6 @@ function getRandomArbitrary(min, max, precision) {
 
   return random.toFixed(precision);
 }
-
-console.log(getRandomArbitrary(10, 100, 1));
 
 // Задание №3.
 
