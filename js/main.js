@@ -164,6 +164,5 @@ const fillCard = (quantity) => {
   return cardList;
 };
 
-console.log(cardList);
 
 
