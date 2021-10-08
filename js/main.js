@@ -26,7 +26,7 @@ function getRandomArbitrary(min, max, precision) {
 
 // Задание №3.
 
-const AVATAR = [
+const AVATARS = [
   'img/avatars/user01.png',
   'img/avatars/user02.png',
   'img/avatars/user03.png',
@@ -39,7 +39,7 @@ const AVATAR = [
   'img/avatars/user10.png'
 ]
 
-const TYPE = [
+const TYPES = [
   'palace',
   'flat',
   'house',
@@ -47,7 +47,7 @@ const TYPE = [
   'hotel'
 ]
 
-const FEATUERS = [
+const FEATURES = [
   'wifi',
   'dishwasher',
   'parking',
@@ -68,89 +68,38 @@ const CHECK_IN_OUT = [
   '14:00'
 ]
 
+const getArrayElement = (Array) => {
+ const arrayElement =  Array[getRandomNumber(0, Array.length - 1)];
 
-// Объект "author"
-
-// Аватар
-const createAuthor = () => {
-  const randomAvatarIndex = _.random(0, AVATAR.length - 1);
-
-  return {
-    avatar: AVATAR[randomAvatarIndex],
-  };
-};
-
-// Объект "location"
-
-// Ширина
-const lat = getRandomArbitrary(35.65000, 35.70000, 5);
-
-// Долгота
-const lng = getRandomArbitrary(139.70000, 139.80000, 5);
-
-// Объект "offer"
-
-// Адрес
-const coordinatesWidth = lat;
-const coordinatesLongitude = lng;
-
-// Тип жилья
-const showTypeOfHousing = () => {
-  const randomTypeIndex = _.random(0, TYPE.length - 1);
-
-  return {
-    type: TYPE[randomTypeIndex],
-  };
-};
-
-// Въезд/Выезд
-const createCheckInOut = () => {
-  const randomCheckInOutIndex = _.random(0, CHECK_IN_OUT.length - 1);
-
-  return {
-    checkinout: CHECK_IN_OUT[randomCheckInOutIndex],
-  };
-};
-
-// Удаобства
-
-const createFacilities = () => {
-  const randomFacilitiesIndex = _.random(0, FEATUERS.length - 1);
-
-  return {
-    facilities: FEATUERS[randomFacilitiesIndex],
-  };
-};
-
-// Фотография жилья
-const createPhotoPremises = () => {
-  const randomPhotoIndex = _.random(0, PHOTOS.length - 1);
-
-  return {
-    photo: PHOTOS[randomPhotoIndex],
-  };
+ return arrayElement;
 };
 
 // Карточка
-
 const createCard = () => {
+
+  const location = {
+    x: getRandomArbitrary(35.65000, 35.70000, 5),
+    y: getRandomArbitrary(139.70000, 139.80000, 5),
+  };
+
   return {
     author: {
-      avatar: createAuthor(),
+      avatar: getArrayElement(AVATARS)
     },
     offer: {
       title: 'Ваше объявление',
-      adress: 'Ширина ' + coordinatesWidth + ' Долгота ' + coordinatesLongitude,
-      price: 'Стоимость в сутки ' + getRandomNumber(1000, 10000),
-      type: showTypeOfHousing(),
-      rooms: 'Количество комнат ' +  getRandomNumber(1, 100),
-      guests: 'Количество гостей ' + getRandomNumber(1, 4),
-      checkin: createCheckInOut(),
-      checkout: createCheckInOut(),
-      features: createFacilities(),
+      address: location.x + ', ' + location.y,
+      price: getRandomNumber(1000, 10000),
+      type: getArrayElement(TYPES),
+      rooms: getRandomNumber(1, 100),
+      guests: getRandomNumber(1, 4),
+      checkin: getArrayElement(CHECK_IN_OUT),
+      checkout: getArrayElement(CHECK_IN_OUT),
+      featuers: getArrayElement(FEATURES),
       description: 'Апартаменты',
-      photos: createPhotoPremises()
+      photos: getArrayElement(PHOTOS)
     },
+    location
   };
 };
 
@@ -158,11 +107,12 @@ const fillCard = (quantity) => {
   const cardList = [];
 
   for (let i = 0; i < quantity; i++) {
-    cardList.push(createCard());
+    cardList.push(createCard(i));
   }
 
   return cardList;
 };
 
+console.log(fillCard(10));
 
 
