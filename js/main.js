@@ -113,6 +113,6 @@ const fillCard = (quantity) => {
   return cardList;
 };
 
-console.log(fillCard(10));
+fillCard(10);
 
 
