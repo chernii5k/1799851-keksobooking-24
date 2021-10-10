@@ -24,6 +24,28 @@ function getRandomArbitrary(min, max, precision) {
   return random.toFixed(precision);
 }
 
+const getArrayElement = (Array) => {
+  const arrayElement =  Array[getRandomNumber(0, Array.length - 1)];
+
+  return arrayElement;
+ };
+
+function getArray(Array) {
+  const maxLength = Array.length;
+  const lengthOfArray = getRandomNumber(1, maxLength);
+  const randomArray = [];
+
+  while (randomArray.length < lengthOfArray) {
+    const indexOfElement = getRandomNumber(0, maxLength - 1);
+    const element = Array[indexOfElement];
+
+    if (!randomArray.includes(element)) {
+      randomArray.push(element);
+    }
+  }
+  return randomArray;
+}
+
 // Задание №3.
 
 const AVATARS = [
@@ -68,18 +90,13 @@ const CHECK_IN_OUT = [
   '14:00'
 ]
 
-const getArrayElement = (Array) => {
- const arrayElement =  Array[getRandomNumber(0, Array.length - 1)];
-
- return arrayElement;
-};
 
 // Карточка
 const createCard = () => {
 
   const location = {
-    x: getRandomArbitrary(35.65000, 35.70000, 5),
-    y: getRandomArbitrary(139.70000, 139.80000, 5),
+    lat: getRandomArbitrary(35.65000, 35.70000, 5),
+    lng: getRandomArbitrary(139.70000, 139.80000, 5),
   };
 
   return {
@@ -88,16 +105,16 @@ const createCard = () => {
     },
     offer: {
       title: 'Ваше объявление',
-      address: location.x + ', ' + location.y,
+      address: location.lat + ', ' + location.lng,
       price: getRandomNumber(1000, 10000),
       type: getArrayElement(TYPES),
       rooms: getRandomNumber(1, 100),
       guests: getRandomNumber(1, 4),
       checkin: getArrayElement(CHECK_IN_OUT),
       checkout: getArrayElement(CHECK_IN_OUT),
-      featuers: getArrayElement(FEATURES),
+      featuers: getArray(FEATURES),
       description: 'Апартаменты',
-      photos: getArrayElement(PHOTOS)
+      photos: getArray(PHOTOS)
     },
     location
   };
