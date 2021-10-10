@@ -10,7 +10,7 @@ function getRandomNumber(min, max) {
   min = Math.ceil(min); // Возвращает значение числа, округлённое к большему целому.
   max = Math.floor(max); // Возвращает значение числа, округлённое к меньшему целому.
   return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
-}
+};
 
 // Задание №2.
 
@@ -22,13 +22,13 @@ function getRandomArbitrary(min, max, precision) {
   const random = Math.random() * (max - min) + min;
 
   return random.toFixed(precision);
-}
+};
 
 const getArrayElement = (Array) => {
   const arrayElement =  Array[getRandomNumber(0, Array.length - 1)];
 
   return arrayElement;
- };
+};
 
 function getArray(Array) {
   const maxLength = Array.length;
@@ -44,7 +44,7 @@ function getArray(Array) {
     }
   }
   return randomArray;
-}
+};
 
 // Задание №3.
 
@@ -58,16 +58,16 @@ const AVATARS = [
   'img/avatars/user07.png',
   'img/avatars/user08.png',
   'img/avatars/user09.png',
-  'img/avatars/user10.png'
-]
+  'img/avatars/user10.png',
+];
 
 const TYPES = [
   'palace',
   'flat',
   'house',
   'bungalow',
-  'hotel'
-]
+  'hotel',
+];
 
 const FEATURES = [
   'wifi',
@@ -75,20 +75,20 @@ const FEATURES = [
   'parking',
   'washer',
   'elevator',
-  'conditioner'
-]
+  'conditioner',
+];
 
 const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
-]
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
+];
 
 const CHECK_IN_OUT = [
   '12:00',
   '13:00',
-  '14:00'
-]
+  '14:00',
+];
 
 
 // Карточка
@@ -101,7 +101,7 @@ const createCard = () => {
 
   return {
     author: {
-      avatar: getArrayElement(AVATARS)
+      avatar: getArrayElement(AVATARS),
     },
     offer: {
       title: 'Ваше объявление',
@@ -114,9 +114,9 @@ const createCard = () => {
       checkout: getArrayElement(CHECK_IN_OUT),
       featuers: getArray(FEATURES),
       description: 'Апартаменты',
-      photos: getArray(PHOTOS)
+      photos: getArray(PHOTOS),
     },
-    location
+    location,
   };
 };
 
