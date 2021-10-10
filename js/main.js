@@ -10,7 +10,7 @@ function getRandomNumber(min, max) {
   min = Math.ceil(min); // Возвращает значение числа, округлённое к большему целому.
   max = Math.floor(max); // Возвращает значение числа, округлённое к меньшему целому.
   return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
-};
+}
 
 // Задание №2.
 
@@ -22,7 +22,7 @@ function getRandomArbitrary(min, max, precision) {
   const random = Math.random() * (max - min) + min;
 
   return random.toFixed(precision);
-};
+}
 
 const getArrayElement = (Array) => {
   const arrayElement =  Array[getRandomNumber(0, Array.length - 1)];
@@ -44,7 +44,7 @@ function getArray(Array) {
     }
   }
   return randomArray;
-};
+}
 
 // Задание №3.
 
@@ -105,7 +105,7 @@ const createCard = () => {
     },
     offer: {
       title: 'Ваше объявление',
-      address: location.lat + ', ' + location.lng,
+      address: `${location.lat} , ${location.lng}`,
       price: getRandomNumber(1000, 10000),
       type: getArrayElement(TYPES),
       rooms: getRandomNumber(1, 100),
@@ -130,6 +130,6 @@ const fillCard = (quantity) => {
   return cardList;
 };
 
-fillCard(10);
+(fillCard(10));
 
 
