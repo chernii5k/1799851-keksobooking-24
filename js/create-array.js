@@ -1,4 +1,4 @@
-import {getRandomNumber} from './get-random-number.js';
+import {getRandomPositiveInteger} from './utils/get-random-positive-integer,js';
 
 const FEATURES = [
   'wifi',
@@ -17,11 +17,11 @@ const PHOTOS = [
 
 function getArray(Array) {
   const maxLength = Array.length;
-  const lengthOfArray = getRandomNumber(1, maxLength);
+  const lengthOfArray = getRandomPositiveInteger(1, maxLength);
   const randomArray = [];
 
   while (randomArray.length < lengthOfArray) {
-    const indexOfElement = getRandomNumber(0, maxLength - 1);
+    const indexOfElement = getRandomPositiveInteger(0, maxLength - 1);
     const element = Array[indexOfElement];
 
     if (!randomArray.includes(element)) {

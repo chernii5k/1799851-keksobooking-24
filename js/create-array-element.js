@@ -1,4 +1,4 @@
-import {getRandomNumber} from './get-random-number.js';
+import {getRandomPositiveInteger} from './utils/get-random-positive-integer.js';
 
 const AVATARS = [
   'img/avatars/user01.png',
@@ -28,7 +28,7 @@ const CHECK_IN_OUT = [
 ];
 
 const getArrayElement = (Array) => {
-  const arrayElement =  Array[getRandomNumber(0, Array.length - 1)];
+  const arrayElement =  Array[getRandomPositiveInteger(0, Array.length - 1)];
 
   return arrayElement;
 };
