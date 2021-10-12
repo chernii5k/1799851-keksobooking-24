@@ -41,4 +41,4 @@ const fillCard = (quantity) => {
   return cardList;
 };
 
-export {fillCard};
+export {createCard, fillCard};
