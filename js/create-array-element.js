@@ -27,10 +27,18 @@ const CHECK_IN_OUT = [
   '14:00',
 ];
 
+const typeOfHousingMap = {
+  palace: 'Дворец',
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalow: 'Бунгало',
+  hotel: 'Отель',
+};
+
 const getArrayElement = (Array) => {
   const arrayElement =  Array[getRandomPositiveInteger(0, Array.length - 1)];
 
   return arrayElement;
 };
 
-export {getArrayElement, TYPES, CHECK_IN_OUT, AVATARS};
+export {getArrayElement, TYPES, CHECK_IN_OUT, AVATARS, typeOfHousingMap};
