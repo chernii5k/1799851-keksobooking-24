@@ -1,5 +1,5 @@
-import {fillCard} from './creat-fill-card.js';
+import {fillCard} from './create-fill-card.js';
+import {renderCard} from './render-card.js';
 
-fillCard(10);
-
-
+const dataOffers = fillCard(10);
+renderCard(dataOffers[0]);
