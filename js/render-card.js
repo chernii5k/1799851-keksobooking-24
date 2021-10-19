@@ -1,9 +1,8 @@
 import { typeOfHousingMap } from './create-array-element.js';
-import { FEATURES } from './create-array.js';
 
 const currentCard = document.querySelector('#card').content.querySelector('.popup');
 
-const similarCardFragment = document.createDocumentFragment();
+// const similarCardFragment = document.createDocumentFragment();
 const cardContainer = document.querySelector('#map-canvas');
 const photoTemplate = currentCard.querySelector('.popup__photo');
 
