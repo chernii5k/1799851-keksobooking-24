@@ -21,6 +21,7 @@ const renderFeatures = (features, container) => {
 
   features.forEach((item) => {
     const li = document.createElement('li');
+    li.classList.add('popup__feature');
     li.classList.add(`popup__feature--${item}`);
     container.appendChild(li);
   });
