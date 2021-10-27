@@ -92,7 +92,6 @@ timeOutElem.addEventListener('change', (evt) => {
 });
 
 // Поле «Тип жилья» влияет на минимальное значение поля «Цена за ночь»
-
 const setMinHousingPrice = (price) => {
   priceInput.min = price;
   priceInput.placeholder = price;
