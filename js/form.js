@@ -19,7 +19,7 @@ const timeOutElem = document.querySelector('#timeout');
 
 // Заголовок объявления
 
-titleInput.addEventListener('invalid', () => {
+titleInput.addEventListener('input', () => {
 
   if (titleInput.validity.tooShort) {
     titleInput.setCustomValidity(`Заголовок объявления должен состоять минимум из ${MIN_TITLE_LENGTH} симв.`);
