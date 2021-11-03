@@ -16,6 +16,31 @@ const selectCapacityElem = document.querySelector('#capacity');
 const capacityItem = selectCapacityElem.querySelectorAll('option');
 const timeInElem = document.querySelector('#timein');
 const timeOutElem = document.querySelector('#timeout');
+const adForm = document.querySelector('.ad-form');
+const formFilters = document.querySelector('.map__filters');
+
+const addFormDisabled = () => {
+  const adFormFieldsets = adForm.querySelector('fildset');
+  adForm.classList.add('ad-form--disabled');
+
+  adFormFieldsets.forEach((item) => {
+    item.setAttribute('disabled', true);
+  });
+};
+
+const addMapFiltersDisabled = () => {
+  const mapFiltersFieldset = formFilters.querySelector('fildset');
+  const mapFiltersSelects = formFilters.querySelector('select');
+  formFilters.classList.add('map__filters--disabled');
+  mapFiltersFieldset.setAttribute.add('disabled', true);
+
+  mapFiltersSelects.forEach((select) => {
+    select.setAttribute('disabled', true);
+  });
+};
+
+addFormDisabled();
+addMapFiltersDisabled();
 
 // Заголовок объявления
 
