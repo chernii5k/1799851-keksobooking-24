@@ -22,6 +22,8 @@ const adFormFieldsets = [adForm.querySelector('fieldset')];
 const mapFiltersFieldset = formFilters.querySelector('fieldset');
 const mapFiltersSelects = [formFilters.querySelector('select')];
 
+// Состояния страницы (активное, неактивное)
+
 const addFormDisabled = () => {
   adForm.classList.add('ad-form--disabled');
 
