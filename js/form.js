@@ -18,9 +18,9 @@ const timeInElem = document.querySelector('#timein');
 const timeOutElem = document.querySelector('#timeout');
 const adForm = document.querySelector('.ad-form');
 const formFilters = document.querySelector('.map__filters');
-const adFormFieldsets = [adForm.querySelector('fieldset')];
+const adFormFieldsets = adForm.querySelectorAll('fieldset');
 const mapFiltersFieldset = formFilters.querySelector('fieldset');
-const mapFiltersSelects = [formFilters.querySelector('select')];
+const mapFiltersSelects = formFilters.querySelectorAll('select');
 
 // Состояния страницы (активное, неактивное)
 
