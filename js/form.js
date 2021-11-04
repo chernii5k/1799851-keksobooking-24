@@ -16,6 +16,50 @@ const selectCapacityElem = document.querySelector('#capacity');
 const capacityItem = selectCapacityElem.querySelectorAll('option');
 const timeInElem = document.querySelector('#timein');
 const timeOutElem = document.querySelector('#timeout');
+const adForm = document.querySelector('.ad-form');
+const formFilters = document.querySelector('.map__filters');
+const adFormFieldsets = adForm.querySelectorAll('fieldset');
+const mapFiltersFieldset = formFilters.querySelector('fieldset');
+const mapFiltersSelects = formFilters.querySelectorAll('select');
+
+// Состояния страницы (активное, неактивное)
+
+const addFormDisabled = () => {
+  adForm.classList.add('ad-form--disabled');
+
+  adFormFieldsets.forEach((item) => {
+    item.setAttribute('disabled', true);
+  });
+};
+
+const addMapFiltersDisabled = () => {
+  formFilters.classList.add('map__filters--disabled');
+  mapFiltersFieldset.setAttribute('disabled', true);
+
+  mapFiltersSelects.forEach((select) => {
+    select.setAttribute('disabled', true);
+  });
+};
+
+const removeFormDisabled = () => {
+  adForm.classList.remove('ad-form--disabled');
+
+  adFormFieldsets.forEach((item) => {
+    item.removeAttribute('disabled');
+  });
+};
+
+const removeMapFiltersDisabled = () => {
+  formFilters.classList.remove('map__filters--disabled');
+  mapFiltersFieldset.removeAttribute('disabled');
+
+  mapFiltersSelects.forEach((select) => {
+    select.removeAttribute('disabled');
+  });
+};
+
+addFormDisabled();
+addMapFiltersDisabled();
 
 // Заголовок объявления
 

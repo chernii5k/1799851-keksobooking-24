@@ -4,3 +4,4 @@ import './form.js';
 
 const dataOffers = fillCard(10);
 renderCard(dataOffers[0]);
+
