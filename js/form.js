@@ -144,3 +144,10 @@ const setMinHousingPrice = (price) => {
 typeHouse.addEventListener('change', (evt) => {
   setMinHousingPrice(minPrice[evt.target.value]);
 });
+
+const removeDisabled = () => {
+  removeFormDisabled();
+  removeMapFiltersDisabled();
+};
+
+export {removeDisabled};
