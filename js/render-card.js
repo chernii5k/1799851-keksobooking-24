@@ -41,7 +41,9 @@ const renderCard = (element) => {
   cardElement.querySelector('.popup__description').textContent = element.offer.description;
   photosContainer.appendChild(renderPhotos(element.offer.photos));
   cardElement.querySelector('.popup__avatar').src = element.author.avatar;
-  cardContainer.appendChild(cardElement);
+  // cardContainer.appendChild(cardElement);
+
+  return cardElement;
 };
 
 export {renderCard};

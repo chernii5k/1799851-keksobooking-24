@@ -67,7 +67,7 @@ points.forEach((card) => {
 
   normalMarker
     .addTo(map)
-    .bindPopup(renderCard);
+    .bindPopup(renderCard(card));
 });
 
 // Выбор адреса путем перемещения метки

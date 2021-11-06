@@ -1,5 +1,4 @@
 // import {fillCard} from './create-fill-card.js';
-import './render-card.js';
 import './form.js';
 import './map.js';
 
