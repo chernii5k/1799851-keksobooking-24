@@ -11,3 +11,4 @@ featuresList.forEach((featuresListItem) => {
     featuresListItem.remove();
   }
 });
+
