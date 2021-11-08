@@ -1,3 +1,6 @@
+import { sendData } from './api.js';
+import { sendError } from './show-message.js';
+
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const titleInput = document.querySelector('.ad-form__advert');
@@ -136,18 +139,37 @@ timeOutElem.addEventListener('change', (evt) => {
 });
 
 // Поле «Тип жилья» влияет на минимальное значение поля «Цена за>
+
 const setMinHousingPrice = (price) => {
   priceInput.min = price;
   priceInput.placeholder = price;
 };
 
+// Устанавливает минимальную цену по типу жилья
+
 typeHouse.addEventListener('change', (evt) => {
   setMinHousingPrice(minPrice[evt.target.value]);
 });
+
+// Переход формы в активное состояние
 
 const removeDisabled = () => {
   removeFormDisabled();
   removeMapFiltersDisabled();
 };
 
-export {removeDisabled};
+// Отправка формы на сервер
+
+const setUserFormSubmit = (onSuccess) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => onSuccess(),
+      () => sendError(),
+      new FormData(evt),
+    );
+  });
+};
+
+export { removeDisabled, setUserFormSubmit };

@@ -1,7 +1,7 @@
-import {getArray, PHOTOS, FEATURES} from './create-array.js';
-import {getRandomPositiveInteger} from './utils/get-random-positive-integer.js';
-import {getRandomPositiveFloat} from './utils/get-random-positive-float.js';
-import {getArrayElement, TYPES, CHECK_IN_OUT, AVATARS} from './create-array-element.js';
+import { getArray, PHOTOS, FEATURES } from './create-array.js';
+import { getRandomPositiveInteger } from './utils/get-random-positive-integer.js';
+import { getRandomPositiveFloat } from './utils/get-random-positive-float.js';
+import { getArrayElement, TYPES, CHECK_IN_OUT, AVATARS } from './data.js';
 
 const createCard = () => {
 
@@ -41,4 +41,4 @@ const fillCard = (quantity) => {
   return cardList;
 };
 
-export {fillCard};
+export { fillCard };

@@ -1,4 +1,4 @@
-import {getArray, FEATURES} from './create-array.js';
+import { getArray, FEATURES } from './create-array.js';
 
 const featuresContainer = document.querySelector('.popup__features');
 const featuresList = featuresContainer.querySelectorAll('.popup__feature');
@@ -11,4 +11,3 @@ featuresList.forEach((featuresListItem) => {
     featuresListItem.remove();
   }
 });
-

@@ -1,4 +1,4 @@
-import {getRandomPositiveInteger} from './utils/get-random-positive-integer.js';
+import { getRandomPositiveInteger } from './utils/get-random-positive-integer.js';
 
 const AVATARS = [
   'img/avatars/user01.png',
@@ -36,9 +36,9 @@ const typeOfHousingMap = {
 };
 
 const getArrayElement = (Array) => {
-  const arrayElement =  Array[getRandomPositiveInteger(0, Array.length - 1)];
+  const arrayElement = Array[getRandomPositiveInteger(0, Array.length - 1)];
 
   return arrayElement;
 };
 
-export {getArrayElement, TYPES, CHECK_IN_OUT, AVATARS, typeOfHousingMap};
+export { getArrayElement, TYPES, CHECK_IN_OUT, AVATARS, typeOfHousingMap };

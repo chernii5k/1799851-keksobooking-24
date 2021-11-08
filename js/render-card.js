@@ -1,8 +1,7 @@
-import { typeOfHousingMap } from './create-array-element.js';
+import { typeOfHousingMap } from './data.js';
 
 const currentCard = document.querySelector('#card').content.querySelector('.popup');
 
-const cardContainer = document.querySelector('#map-canvas');
 const photoTemplate = currentCard.querySelector('.popup__photo');
 
 const renderPhotos = (photos) => {
@@ -41,9 +40,8 @@ const renderCard = (element) => {
   cardElement.querySelector('.popup__description').textContent = element.offer.description;
   photosContainer.appendChild(renderPhotos(element.offer.photos));
   cardElement.querySelector('.popup__avatar').src = element.author.avatar;
-  // cardContainer.appendChild(cardElement);
 
   return cardElement;
 };
 
-export {renderCard};
+export { renderCard };

@@ -1,4 +1,4 @@
-import {getRandomPositiveInteger} from './utils/get-random-positive-integer.js';
+import { getRandomPositiveInteger } from './utils/get-random-positive-integer.js';
 
 const FEATURES = [
   'wifi',
@@ -31,4 +31,4 @@ function getArray(Array) {
   return randomArray;
 }
 
-export {getArray, PHOTOS, FEATURES};
+export { getArray, PHOTOS, FEATURES };
