@@ -1,9 +1,11 @@
 const successContainer = document.querySelector('.success');
 const errorContainer = document.querySelector('.error');
+const SHOW_TIME_MESSAGE = 5000;
+
 // const errorButton = errorContainer.querySelector('.error__button');
 
 const isEscapeKey = function (evt) {
-  return evt.key === 'Escape';
+  return evt.key === 'Escape' || evt.key === 'Esc';
 };
 
 const onMessageEscKeydown = (evt) => {
@@ -19,50 +21,56 @@ const onMessageEscKeydown = (evt) => {
 //   }
 // };
 
-function closeMessage () {
+function closeMessage() {
   successContainer.classList.add('hidden');
   errorContainer.classList.add('hidden');
 
   document.removeEventListener('keydown', onMessageEscKeydown);
 }
 
-const sendSuccess = () => {
-  const messageElement = successContainer.cloneNode(true);
-  const successMessage = successContainer.querySelector('.success__message');
+const showMessageSuccess = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '15px 5px';
+  alertContainer.style.fontSize = '40px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'green';
+  alertContainer.style.color = 'white';
 
-  messageElement.style.zIndex = '100';
-  messageElement.style.position = 'absolute';
-  messageElement.style.textAlign = 'center';
-  messageElement.style.left = '0';
-  messageElement.style.top = '0';
-  messageElement.style.right = '0';
-  messageElement.style.padding = '15px 5px';
-  messageElement.style.backgroundColor = 'red';
-  successMessage.style.fontSize = '20px';
-  successMessage.style.fontWeigth = '400';
-  successMessage.style.color = 'black';
+  alertContainer.textContent = message;
 
-  return messageElement;
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, SHOW_TIME_MESSAGE);
 };
 
-const sendError = () => {
-  const messageElement = errorContainer.cloneNode(true);
-  const errorMessage = errorContainer.querySelector('.error__message');
+const showMessageError = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '15px 5px';
+  alertContainer.style.fontSize = '40px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+  alertContainer.style.color = 'black';
 
-  messageElement.style.zIndex = '100';
-  messageElement.style.position = 'absolute';
-  messageElement.style.textAlign = 'center';
-  messageElement.style.left = '0';
-  messageElement.style.top = '0';
-  messageElement.style.right = '0';
-  messageElement.style.padding = '15px 5px';
-  messageElement.style.backgroundColor = 'green';
-  errorMessage.style.fontSize = '40px';
-  errorMessage.style.fontWeigth = '400';
-  errorMessage.style.color = 'white';
+  alertContainer.textContent = message;
 
-  return messageElement;
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, SHOW_TIME_MESSAGE);
 };
 
-export { sendSuccess, sendError };
+export { showMessageError, showMessageSuccess };
 

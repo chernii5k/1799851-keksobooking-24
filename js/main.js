@@ -1,10 +1,15 @@
-import { setUserFormSubmit } from './form.js';
 import './map.js';
-import { renderCard } from './render-card.js';
+
+import { setUserFormSubmit } from './form.js';
 import { getData } from './api.js';
-import { sendSuccess } from './show-message.js';
+import {getOffersMark} from './map.js';
+
+let data = [];
 
 getData((offers) => {
-  renderCard(offers);
+  data = offers;
+  const sliceOffers = data.slice(0, 10);
+  getOffersMark(sliceOffers);
 });
 
+setUserFormSubmit();

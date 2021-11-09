@@ -1,5 +1,6 @@
 import { sendData } from './api.js';
-import { sendError } from './show-message.js';
+import { showMessageSuccess, showMessageError } from './show-message.js';
+import { returnMarker, mainMarker } from './map.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -24,6 +25,8 @@ const formFilters = document.querySelector('.map__filters');
 const adFormFieldsets = adForm.querySelectorAll('fieldset');
 const mapFiltersFieldset = formFilters.querySelector('fieldset');
 const mapFiltersSelects = formFilters.querySelectorAll('select');
+const formResetButton = adForm.querySelector('.ad-form__reset');
+const inputAddress = document.getElementById('address');
 
 // Состояния страницы (активное, неактивное)
 
@@ -160,16 +163,25 @@ const removeDisabled = () => {
 
 // Отправка формы на сервер
 
-const setUserFormSubmit = (onSuccess) => {
+const setUserFormSubmit = () => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     sendData(
-      () => onSuccess(),
-      () => sendError(),
-      new FormData(evt),
+      () => {
+        returnMarker(),
+        inputAddress.value = `${mainMarker.lat}, ${mainMarker.lng}`;
+      },
+      () => showMessageError('Не удалось отправить форму. Попробуйте еще раз.'),
+      new FormData(evt.target),
     );
   });
 };
 
-export { removeDisabled, setUserFormSubmit };
+// // Кнопка очистки формы
+
+// formResetButton.addEventListener('click', (evt) => {
+//   evt.preventDefault();
+// });
+
+export { removeDisabled, setUserFormSubmit, inputAddress };
