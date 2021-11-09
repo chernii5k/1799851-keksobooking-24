@@ -8,19 +8,19 @@ const typeOfHousingMap = {
 const currentCard = document.querySelector('#card').content.querySelector('.popup');
 const photoTemplate = currentCard.querySelector('.popup__photo');
 
-const checkTextContentData = (element) => {
-  if (element.textContent === '') {
-    element.remove();
-  }
-  return element;
-};
+// const checkTextContentData = (element) => {
+//   if (element.textContent === '') {
+//     element.remove();
+//   }
+//   return element;
+// };
 
-const checkChildData = (element) => {
-  if (element.children.length === 0) {
-    element.remove();
-  }
-  return element;
-};
+// const checkChildData = (element) => {
+//   if (element.children.length === 0) {
+//     element.remove();
+//   }
+//   return element;
+// };
 
 const renderPhotos = (photos) => {
   const photosFragment = document.createDocumentFragment();
