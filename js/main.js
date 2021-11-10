@@ -1,8 +1,9 @@
 import './map.js';
+import './show-message.js';
 
 import { setUserFormSubmit } from './form.js';
 import { getData } from './api.js';
-import {getOffersMark} from './map.js';
+import { getOffersMark } from './map.js';
 
 let data = [];
 

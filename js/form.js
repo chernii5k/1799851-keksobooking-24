@@ -1,6 +1,6 @@
 import { sendData } from './api.js';
 import { showMessageSuccess, showMessageError } from './show-message.js';
-import { returnMarker, mainMarker } from './map.js';
+import { returnMarker, latCoordinates, lngCoordinates } from './map.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -25,7 +25,7 @@ const formFilters = document.querySelector('.map__filters');
 const adFormFieldsets = adForm.querySelectorAll('fieldset');
 const mapFiltersFieldset = formFilters.querySelector('fieldset');
 const mapFiltersSelects = formFilters.querySelectorAll('select');
-const formResetButton = adForm.querySelector('.ad-form__reset');
+const clearFormButton = adForm.querySelector('.ad-form__reset');
 const inputAddress = document.getElementById('address');
 
 // Состояния страницы (активное, неактивное)
@@ -161,6 +161,15 @@ const removeDisabled = () => {
   removeMapFiltersDisabled();
 };
 
+// Очистка формы при успешной отправке
+
+const clearForm = () => {
+  adForm.reset();
+  formFilters.reset();
+  returnMarker();
+  inputAddress.value = `${latCoordinates}, ${lngCoordinates}`;
+};
+
 // Отправка формы на сервер
 
 const setUserFormSubmit = () => {
@@ -169,19 +178,24 @@ const setUserFormSubmit = () => {
 
     sendData(
       () => {
-        returnMarker();
-        inputAddress.value = `${mainMarker.lat}, ${mainMarker.lng}`;
+        clearForm();
+        showMessageSuccess();
       },
-      () => showMessageError('Не удалось отправить форму. Попробуйте еще раз.'),
-      new FormData(evt.target),
+      () => {
+        showMessageError();
+      },
+      () => {
+        new FormData(evt.target);
+      },
     );
   });
 };
 
-// // Кнопка очистки формы
+// Кнопка очистки формы
 
-// formResetButton.addEventListener('click', (evt) => {
-//   evt.preventDefault();
-// });
+clearFormButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  clearForm();
+});
 
 export { removeDisabled, setUserFormSubmit, inputAddress };
