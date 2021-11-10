@@ -1,5 +1,5 @@
 import { sendData } from './api.js';
-import { showMessageSuccess, showMessageError } from './show-message.js';
+import { showMessageSuccess, showMessageError, openMessageModal } from './show-message.js';
 import { returnMarker, latCoordinates, lngCoordinates } from './map.js';
 
 const MIN_TITLE_LENGTH = 30;
@@ -180,9 +180,11 @@ const setUserFormSubmit = () => {
       () => {
         clearForm();
         showMessageSuccess();
+        openMessageModal();
       },
       () => {
         showMessageError();
+        openMessageModal();
       },
       () => {
         new FormData(evt.target);

@@ -99,5 +99,5 @@ if (showMessageSuccess || showMessageError) {
   openMessageModal();
 }
 
-export { showMessageError, showMessageSuccess };
+export { showMessageError, showMessageSuccess, openMessageModal };
 
