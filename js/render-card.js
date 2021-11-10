@@ -5,22 +5,9 @@ const typeOfHousingMap = {
   bungalow: 'Бунгало',
   hotel: 'Отель',
 };
+
 const currentCard = document.querySelector('#card').content.querySelector('.popup');
 const photoTemplate = currentCard.querySelector('.popup__photo');
-
-// const checkTextContentData = (element) => {
-//   if (element.textContent === '') {
-//     element.remove();
-//   }
-//   return element;
-// };
-
-// const checkChildData = (element) => {
-//   if (element.children.length === 0) {
-//     element.remove();
-//   }
-//   return element;
-// };
 
 const renderPhotos = (photos) => {
   const photosFragment = document.createDocumentFragment();
@@ -34,6 +21,9 @@ const renderPhotos = (photos) => {
 
 const renderFeatures = (features, container) => {
   container.innerHTML = '';
+  if (features.length === 0) {
+    return;
+  }
 
   features.forEach((item) => {
     const li = document.createElement('li');
@@ -45,24 +35,68 @@ const renderFeatures = (features, container) => {
 
 const renderCard = (element) => {
   const cardElement = currentCard.cloneNode(true);
-  const photosContainer = cardElement.querySelector('.popup__photos');
-  const featuresList = cardElement.querySelector('.popup__features');
-  photosContainer.innerHTML = '';
-  cardElement.querySelector('.popup__title').textContent = element.offer.title;
-  cardElement.querySelector('.popup__text--address').textContent = element.offer.address;
-  cardElement.querySelector('.popup__text--price').textContent = `${element.offer.price} ₽/ночь`;
-  cardElement.querySelector('.popup__type').textContent = typeOfHousingMap[element.offer.type];
-  cardElement.querySelector('.popup__text--capacity').textContent = `${element.offer.rooms} комнаты для ${element.offer.guests} гостей`;
-  cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${element.offer.checkin}, выезд до ${element.offer.checkout}`;
-  renderFeatures(element.offer.features, featuresList);
-  cardElement.querySelector('.popup__description').textContent = element.offer.description;
-  photosContainer.appendChild(renderPhotos(element.offer.photos));
-  cardElement.querySelector('.popup__avatar').src = element.author.avatar;
+  const offerPhotos = cardElement.querySelector('.popup__photos');
+  offerPhotos.innerHTML = '';
+  const offerFeatures = cardElement.querySelector('.popup__features');
+  const avatarImg = cardElement.querySelector('.popup__avatar');
+  const offerTitle = cardElement.querySelector('.popup__title');
+  const offerAddress = cardElement.querySelector('.popup__text--address');
+  const offerPrice = cardElement.querySelector('.popup__text--price');
+  const offerType = cardElement.querySelector('.popup__type');
+  const offerCapacity = cardElement.querySelector('.popup__text--capacity');
+  const offerTime = cardElement.querySelector('.popup__text--time');
+  const offerDescription = cardElement.querySelector('.popup__description');
 
-  // checkTextContentData(element.offer.title);
-  // checkTextContentData(element.offer.address);
-  // checkTextContentData(typeOfHousingMap[element.offer.type]);
-  // checkTextContentData(element.offer.description);
+  if (element.author.avatar) {
+    avatarImg.src = element.author.avatar;
+  } else {
+    avatarImg.classList.add('hidden');
+  }
+  if (element.offer.title) {
+    offerTitle.textContent = element.offer.title;
+  } else {
+    offerTitle.classList.add('hidden');
+  }
+  if (element.offer.address) {
+    offerAddress.textContent = element.offer.address;
+  } else {
+    offerAddress.classList.add('hidden');
+  }
+  if (element.offer.price) {
+    offerPrice.textContent = `${element.offer.price} ₽/ночь`;
+  } else {
+    offerPrice.classList.add('hidden');
+  }
+  if (element.offer.type) {
+    offerType.textContent = typeOfHousingMap[element.offer.type];
+  } else {
+    offerType.classList.add('hidden');
+  }
+  if (element.offer.rooms && element.offer.guests) {
+    offerCapacity.textContent = `${element.offer.rooms} комнаты для ${element.offer.guests} гостей`;
+  } else {
+    offerCapacity.classList.add('hidden');
+  }
+  if (element.offer.checkin && element.offer.checkout) {
+    offerTime.textContent = `Заезд после ${element.offer.checkin}, выезд до ${element.offer.checkout}`;
+  } else {
+    offerTime.classList.add('hidden');
+  }
+  if (element.offer.features) {
+    renderFeatures(element.offer.features, offerFeatures);
+  } else {
+    offerFeatures.classList.add('hidden');
+  }
+  if (element.offer.description) {
+    offerDescription.textContent = element.offer.description;
+  } else {
+    offerDescription.classList.add('hidden');
+  }
+  if (element.offer.photos) {
+    offerPhotos.appendChild(renderPhotos(element.offer.photos));
+  } else {
+    offerPhotos.classList.add('hidden');
+  }
 
   return cardElement;
 };

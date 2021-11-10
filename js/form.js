@@ -169,7 +169,7 @@ const setUserFormSubmit = () => {
 
     sendData(
       () => {
-        returnMarker(),
+        returnMarker();
         inputAddress.value = `${mainMarker.lat}, ${mainMarker.lng}`;
       },
       () => showMessageError('Не удалось отправить форму. Попробуйте еще раз.'),
