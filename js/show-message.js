@@ -3,6 +3,7 @@ const errorContainer = document.querySelector('#error').content.querySelector('.
 const successMessage = document.querySelector('#success').content.querySelector('.success__message');
 const errorMessage = document.querySelector('#error').content.querySelector('.error__message');
 const errorButton = document.querySelector('#error').content.querySelector('.error__button');
+const SHOW_TIME_MESSAGE = 5000;
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
@@ -50,17 +51,19 @@ window.onclick = (evt) => {
 const showMessageSuccess = () => {
   successContainer.cloneNode(true);
 
-  successContainer.style.zIndex = 100;
+  successContainer.style.zIndex = 1;
   successContainer.style.position = 'absolute';
   successContainer.style.width = '100%';
-  successContainer.style.height = '40px';
+  successContainer.style.height = '50px';
   successContainer.style.left = 0;
   successContainer.style.top = 0;
   successContainer.style.right = 0;
-  successContainer.style.backgroundColor = 'green';
   successContainer.style.padding = '10px 5px';
+  successContainer.style.backgroundColor = 'green';
   successMessage.style.fontSize = '20px';
-  successMessage.style.textAlign = 'center';
+  successMessage.style.margin = 0;
+  successMessage.style.lineHeight = 1.2;
+  successMessage.style.marginTop = '3px';
   successMessage.style.color = 'white';
 
   document.body.append(successContainer);
@@ -70,7 +73,7 @@ const showMessageSuccess = () => {
 const showMessageError = () => {
   errorContainer.cloneNode(true);
 
-  errorContainer.style.zIndex = 100;
+  errorContainer.style.zIndex = 1;
   errorContainer.style.position = 'absolute';
   errorContainer.style.width = '100%';
   errorContainer.style.height = '50px';
@@ -79,25 +82,62 @@ const showMessageError = () => {
   errorContainer.style.right = 0;
   errorContainer.style.padding = '10px 5px';
   errorContainer.style.backgroundColor = 'red';
-  errorContainer.style.display = 'flex';
-  errorContainer.style.alignItems = 'center';
-  errorContainer.style.justifyContent = 'space-around';
-  errorContainer.style.overflow = 'hidden';
   errorMessage.style.fontSize = '20px';
-  errorMessage.style.lineHeight = '1.2';
-  errorMessage.style.textAlign = 'center';
-  errorButton.style.height = '20px';
-  errorButton.style.display = 'flex';
-  errorButton.style.justifyContent = 'center';
-  errorButton.style.alignItems = 'center';
+  errorMessage.style.margin = 0;
+  errorMessage.style.lineHeight = 1.2;
+  errorMessage.style.marginTop = '3px';
+  errorButton.style.position = 'absolute';
+  errorButton.style.top = 0;
+  errorButton.style.right = 0;
+  errorButton.style.width = '160px';
+  errorButton.style.borderRadius = '5px';
+  errorButton.style.border = '1px solid #ff5635';
+  errorButton.style.backgroundColor = '#ff5635';
+  errorButton.style.fontSize = '17px';
+  errorButton.style.marginTop = '8px';
+  errorButton.style.marginRight = '40px';
+  errorButton.style.padding = '5px 5px';
 
   document.body.append(errorContainer);
 
+};
+
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  const alertMessage = document.createElement('p');
+
+  alertContainer.style.zIndex = 1;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.width = '100%';
+  alertContainer.style.height = '50px';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 5px';
+  alertContainer.style.backgroundColor = 'red';
+  alertContainer.style.boxSizing = 'border-box';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.verticalAlign = 'middle';
+  alertMessage.style.fontSize = '20px';
+  alertMessage.style.lineHeight = 1.2;
+  alertMessage.style.margin = 0;
+  alertMessage.style.marginTop = '3px';
+  alertMessage.style.color = 'white';
+  alertMessage.style.fontWeight = 700;
+
+  alertMessage.textContent = message;
+
+  alertContainer.appendChild(alertMessage);
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, SHOW_TIME_MESSAGE);
 };
 
 if (showMessageSuccess || showMessageError) {
   openMessageModal();
 }
 
-export { showMessageError, showMessageSuccess, openMessageModal };
+export { showMessageError, showMessageSuccess, openMessageModal, showAlert };
 
