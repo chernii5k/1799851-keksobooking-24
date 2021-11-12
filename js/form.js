@@ -102,7 +102,6 @@ priceInput.addEventListener('input', () => {
 // Поле «Количество комнат» синхронизировано с полем «Количество гостей»
 
 const defaultCapacity = () => {
-  capacityItem[2].setAttribute('selected', true);
   capacityItem[3].setAttribute('disabled', true);
   capacityItem[0].setAttribute('disabled', true);
 };
@@ -112,7 +111,6 @@ window.addEventListener('load', defaultCapacity);
 const checkGuestsCapacity = () => {
   if (selectRoomsElem.value === '1') {
     capacityItem[0].setAttribute('disabled', true);
-    capacityItem[1].setAttribute('disabled', true);
     capacityItem[2].removeAttribute('disabled');
     capacityItem[3].setAttribute('disabled', true);
     selectCapacityElem.value = '1';
