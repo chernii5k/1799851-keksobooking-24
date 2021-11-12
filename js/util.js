@@ -91,9 +91,9 @@ const createCard = () => {
       guests: getRandomPositiveInteger(1, 4),
       checkin: getArrayElement(CHECK_IN_OUT),
       checkout: getArrayElement(CHECK_IN_OUT),
-      features: getArray(FEATURES),
+      features: getArray(),
       description: 'Апартаменты',
-      photos: getArray(PHOTOS),
+      photos: getArray(),
     },
     location,
   };
