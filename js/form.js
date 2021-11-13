@@ -174,7 +174,7 @@ const clearForm = () => {
   adForm.reset();
   formFilters.reset();
   returnMarker();
-  inputAddress.value = `${latCoordinates}, ${lngCoordinates}`;
+  inputAddress.value = `LatLng(${latCoordinates}, ${lngCoordinates})`;
 };
 
 // Отправка формы на сервер

@@ -23,7 +23,7 @@ const map = L.map('map-canvas')
   .on('load', () => {
     removeDisabled();
 
-    inputAddress.value = `${latCoordinates}, ${lngCoordinates}`;
+    inputAddress.value = `Latitude ${latCoordinates}, Longitude ${lngCoordinates}`;
   })
   .setView({
     lat: latCoordinates,
@@ -84,10 +84,12 @@ const getOffersMark = (points) => {
 // Выбор адреса путем перемещения метки
 
 mainMarker.on('moveend', (evt) => {
-  const adressValue = () => {
-    inputAddress.value = evt.target.getLatLng();
+  const addressValue = () => {
+    const moveEndLat = evt.target.getLatLng().lat;
+    const moveEndLng = evt.target.getLatLng().lng;
+    inputAddress.value = `Latitude ${moveEndLat.toFixed(5)}, Longitude ${moveEndLng.toFixed(5)}`;
   };
-  adressValue();
+  addressValue();
 });
 
 // Возврат метки в исходное состояние
