@@ -1,8 +1,11 @@
-import { removeDisabled } from './form.js';
-import { fillCard } from './create-fill-card.js';
+import { removeDisabled, inputAddress } from './form.js';
 import { renderCard } from './render-card.js';
 
-const points = fillCard(10);
+const latCoordinates = 35.658581.toFixed(5);
+const lngCoordinates = 139.745438.toFixed(5);
+
+// Главная и основные метки
+
 const mainPinIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
   iconSize: [52, 52],
@@ -19,11 +22,13 @@ const secondaryPinIcon = L.icon({
 const map = L.map('map-canvas')
   .on('load', () => {
     removeDisabled();
+
+    inputAddress.value = `Latitude ${latCoordinates}, Longitude ${lngCoordinates}`;
   })
   .setView({
-    lat: 35.658581,
-    lng: 139.745438,
-  }, 13);
+    lat: latCoordinates,
+    lng: lngCoordinates,
+  }, 11);
 
 
 // Отрисовка слоя
@@ -37,10 +42,10 @@ L.tileLayer(
 
 // Основная метка
 
-const marker = L.marker(
+const mainMarker = L.marker(
   {
-    lat: 35.658581,
-    lng: 139.745438,
+    lat: latCoordinates,
+    lng: lngCoordinates,
   },
   {
     draggable: true,
@@ -48,34 +53,57 @@ const marker = L.marker(
   },
 );
 
-marker.addTo(map);
+mainMarker.addTo(map);
 
-// Дополнительные метки
+// Группа меток
 
-points.forEach((card) => {
-  const address = card.location;
+const markerGroup = L.layerGroup().addTo(map);
 
-  const normalMarker = L.marker(
-    {
-      lat: address.lat,
-      lng: address.lng,
-    },
-    {
-      icon: secondaryPinIcon,
-    },
-  );
+// Добавляет метки объявлений из данных с сервера
 
-  normalMarker
-    .addTo(map)
-    .bindPopup(renderCard(card));
-});
+const getOffersMark = (points) => {
+  points.forEach((point) => {
+    const address = point.location;
+
+    const normalMarker = L.marker(
+      {
+        lat: address.lat,
+        lng: address.lng,
+      },
+      {
+        icon: secondaryPinIcon,
+      },
+    );
+
+    normalMarker
+      .addTo(markerGroup)
+      .bindPopup(renderCard(point));
+  });
+};
 
 // Выбор адреса путем перемещения метки
 
-marker.on('moveend', (evt) => {
-  const inputAddress = document.getElementById('address');
-  const adressValue = () => {
-    inputAddress.value = evt.target.getLatLng();
+mainMarker.on('moveend', (evt) => {
+  const addressValue = () => {
+    const moveEndLat = evt.target.getLatLng().lat;
+    const moveEndLng = evt.target.getLatLng().lng;
+    inputAddress.value = `Latitude ${moveEndLat.toFixed(5)}, Longitude ${moveEndLng.toFixed(5)}`;
   };
-  adressValue();
+  addressValue();
 });
+
+// Возврат метки в исходное состояние
+
+const returnMarker = () => {
+  mainMarker.setLatLng({
+    lat: latCoordinates,
+    lng: lngCoordinates,
+  });
+
+  map.setView({
+    lat: latCoordinates,
+    lng: lngCoordinates,
+  }, 11);
+};
+
+export { getOffersMark, mainMarker, returnMarker, latCoordinates, lngCoordinates };

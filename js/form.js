@@ -1,3 +1,7 @@
+import { sendData } from './api.js';
+import { showMessageSuccess, showMessageError, openMessageModal } from './show-message.js';
+import { returnMarker, latCoordinates, lngCoordinates } from './map.js';
+
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const titleInput = document.querySelector('.ad-form__advert');
@@ -21,6 +25,8 @@ const formFilters = document.querySelector('.map__filters');
 const adFormFieldsets = adForm.querySelectorAll('fieldset');
 const mapFiltersFieldset = formFilters.querySelector('fieldset');
 const mapFiltersSelects = formFilters.querySelectorAll('select');
+const clearFormButton = adForm.querySelector('.ad-form__reset');
+const inputAddress = document.getElementById('address');
 
 // Состояния страницы (активное, неактивное)
 
@@ -95,10 +101,16 @@ priceInput.addEventListener('input', () => {
 
 // Поле «Количество комнат» синхронизировано с полем «Количество гостей»
 
+const defaultCapacity = () => {
+  capacityItem[3].setAttribute('disabled', true);
+  capacityItem[0].setAttribute('disabled', true);
+};
+
+window.addEventListener('load', defaultCapacity);
+
 const checkGuestsCapacity = () => {
   if (selectRoomsElem.value === '1') {
     capacityItem[0].setAttribute('disabled', true);
-    capacityItem[1].setAttribute('disabled', true);
     capacityItem[2].removeAttribute('disabled');
     capacityItem[3].setAttribute('disabled', true);
     selectCapacityElem.value = '1';
@@ -123,6 +135,7 @@ const checkGuestsCapacity = () => {
   }
 };
 
+// window.addEventListener('load', checkGuestsCapacity);
 selectRoomsElem.addEventListener('change', checkGuestsCapacity);
 
 // Поля «Время заезда» и «Время выезда» синхронизированы
@@ -136,18 +149,60 @@ timeOutElem.addEventListener('change', (evt) => {
 });
 
 // Поле «Тип жилья» влияет на минимальное значение поля «Цена за>
+
 const setMinHousingPrice = (price) => {
   priceInput.min = price;
   priceInput.placeholder = price;
 };
 
+// Устанавливает минимальную цену по типу жилья
+
 typeHouse.addEventListener('change', (evt) => {
   setMinHousingPrice(minPrice[evt.target.value]);
 });
+
+// Переход формы в активное состояние
 
 const removeDisabled = () => {
   removeFormDisabled();
   removeMapFiltersDisabled();
 };
 
-export {removeDisabled};
+// Очистка формы при успешной отправке
+
+const clearForm = () => {
+  adForm.reset();
+  formFilters.reset();
+  returnMarker();
+  inputAddress.value = `LatLng(${latCoordinates}, ${lngCoordinates})`;
+};
+
+// Отправка формы на сервер
+
+const setUserFormSubmit = () => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => {
+        clearForm();
+        showMessageSuccess();
+        openMessageModal();
+      },
+      () => {
+        showMessageError();
+        openMessageModal();
+      },
+      new FormData(evt.target),
+    );
+  });
+};
+
+// Кнопка очистки формы
+
+clearFormButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  clearForm();
+});
+
+export { removeDisabled, setUserFormSubmit, inputAddress };

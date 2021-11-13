@@ -1,6 +1,16 @@
-// import {fillCard} from './create-fill-card.js';
-import './form.js';
 import './map.js';
+import './show-message.js';
 
-// const dataOffers = fillCard(10);
-// renderCard(dataOffers[0]);
+import { setUserFormSubmit } from './form.js';
+import { getData } from './api.js';
+import { getOffersMark } from './map.js';
+
+let data = [];
+
+getData((offers) => {
+  data = offers;
+  const sliceOffers = data.slice(0, 10);
+  getOffersMark(sliceOffers);
+});
+
+setUserFormSubmit();
