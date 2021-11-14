@@ -11,7 +11,6 @@ getData((offers) => {
   data = offers;
   const sliceOffers = data.slice(0, 10);
   getOffersMark(sliceOffers);
-
 });
 
 const housingFeatures = document.getElementById('housing-features').getElementsByTagName('input');

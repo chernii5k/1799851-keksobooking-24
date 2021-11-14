@@ -51,7 +51,7 @@ window.onclick = (evt) => {
 const showMessageSuccess = () => {
   successContainer.cloneNode(true);
 
-  successContainer.style.zIndex = 1;
+  successContainer.style.zIndex = 9999;
   successContainer.style.position = 'fixed';
   successContainer.style.width = '100%';
   successContainer.style.height = '50px';
@@ -73,7 +73,7 @@ const showMessageSuccess = () => {
 const showMessageError = () => {
   errorContainer.cloneNode(true);
 
-  errorContainer.style.zIndex = 1;
+  errorContainer.style.zIndex = 9999;
   errorContainer.style.position = 'fixed';
   errorContainer.style.width = '100%';
   errorContainer.style.height = '50px';
@@ -106,7 +106,7 @@ const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   const alertMessage = document.createElement('p');
 
-  alertContainer.style.zIndex = 1;
+  alertContainer.style.zIndex = 9999;
   alertContainer.style.position = 'fixed';
   alertContainer.style.width = '100%';
   alertContainer.style.height = '50px';
