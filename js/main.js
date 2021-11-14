@@ -13,4 +13,13 @@ getData((offers) => {
   getOffersMark(sliceOffers);
 });
 
+const housingFeatures = document.getElementById('housing-features').getElementsByTagName('input');
+const featuresValues = [];
+
+for (let i = 0, j = housingFeatures.length; i < j; ++i) {
+  featuresValues.push(housingFeatures[i].value);
+}
+
+console.log(featuresValues);
+
 setUserFormSubmit();
