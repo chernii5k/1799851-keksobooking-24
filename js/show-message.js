@@ -52,7 +52,7 @@ const showMessageSuccess = () => {
   successContainer.cloneNode(true);
 
   successContainer.style.zIndex = 1;
-  successContainer.style.position = 'absolute';
+  successContainer.style.position = 'fixed';
   successContainer.style.width = '100%';
   successContainer.style.height = '50px';
   successContainer.style.left = 0;
@@ -74,7 +74,7 @@ const showMessageError = () => {
   errorContainer.cloneNode(true);
 
   errorContainer.style.zIndex = 1;
-  errorContainer.style.position = 'absolute';
+  errorContainer.style.position = 'fixed';
   errorContainer.style.width = '100%';
   errorContainer.style.height = '50px';
   errorContainer.style.left = 0;
@@ -107,7 +107,7 @@ const showAlert = (message) => {
   const alertMessage = document.createElement('p');
 
   alertContainer.style.zIndex = 1;
-  alertContainer.style.position = 'absolute';
+  alertContainer.style.position = 'fixed';
   alertContainer.style.width = '100%';
   alertContainer.style.height = '50px';
   alertContainer.style.left = 0;

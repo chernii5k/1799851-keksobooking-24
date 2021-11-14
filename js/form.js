@@ -135,7 +135,6 @@ const checkGuestsCapacity = () => {
   }
 };
 
-// window.addEventListener('load', checkGuestsCapacity);
 selectRoomsElem.addEventListener('change', checkGuestsCapacity);
 
 // Поля «Время заезда» и «Время выезда» синхронизированы
@@ -148,12 +147,12 @@ timeOutElem.addEventListener('change', (evt) => {
   timeInElem.value = evt.target.value;
 });
 
-// Поле «Тип жилья» влияет на минимальное значение поля «Цена за>
+// Поле "Тип жилья" влияет на минимальное значение поля "Цена за ночь"
 
-const setMinHousingPrice = (price) => {
+function setMinHousingPrice(price) {
   priceInput.min = price;
   priceInput.placeholder = price;
-};
+}
 
 // Устанавливает минимальную цену по типу жилья
 
@@ -174,7 +173,7 @@ const clearForm = () => {
   adForm.reset();
   formFilters.reset();
   returnMarker();
-  inputAddress.value = `LatLng(${latCoordinates}, ${lngCoordinates})`;
+  inputAddress.value = `Latitude ${latCoordinates}, Longitude ${lngCoordinates}`;
 };
 
 // Отправка формы на сервер
