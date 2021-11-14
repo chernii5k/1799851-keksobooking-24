@@ -1,6 +1,7 @@
 import { removeDisabled, inputAddress } from './form.js';
 import { renderCard } from './render-card.js';
 
+
 const latCoordinates = 35.658581.toFixed(5);
 const lngCoordinates = 139.745438.toFixed(5);
 
