@@ -1,3 +1,4 @@
+import { getOffersMark } from './map.js';
 import { debounce } from './utils/debounce.js';
 
 const mapFilters = document.querySelector('.map__filters');
@@ -5,14 +6,16 @@ const housingTypeList = mapFilters.querySelector('#housing-type');
 const housingPriceList = mapFilters.querySelector('#housing-price');
 const housingGuestsList = mapFilters.querySelector('#housing-guests');
 const housingRoomsList = mapFilters.querySelector('#housing-rooms');
+const housingFeaturesList = mapFilters.querySelector('#housing-features');
 const DEFAULT_VALUE = 'any';
 
 const filterByType = (offer) => {
-  if (!offer.offer.type) {
-    housingTypeList.value === DEFAULT_VALUE;
-  } else {
+  if (offer.offer.type) {
     housingTypeList.value === offer.offer.type;
+  } else {
+    housingTypeList.value === DEFAULT_VALUE;
   }
+  return housingTypeList.value;
 };
 
 const filterByPrice = (offer) => {
@@ -23,44 +26,53 @@ const filterByPrice = (offer) => {
       offer.offer.price >= 10000 && offer.offer.price < 50000 && housingPriceList.value === 'middle' ||
       offer.offer.price >= 50000 && housingPriceList.value === 'high';
   }
+  return housingPriceList.value;
 };
 
 const filterByRooms = (offer) => {
-  if (!offer.offer.rooms) {
-    housingRoomsList.value === DEFAULT_VALUE;
-  } else {
+  if (offer.offer.rooms) {
     String(offer.offer.rooms) === housingRoomsList.value;
+  } else {
+    housingRoomsList.value === DEFAULT_VALUE;
   }
+  return housingRoomsList.value;
 };
 
 const filterByGuests = (offer) => {
-  if (!offer.offer.guests) {
-    housingGuestsList.value === DEFAULT_VALUE;
-  } else {
+  if (offer.offer.guests) {
     String(offer.offer.guests) === housingGuestsList.value;
+  } else {
+    housingGuestsList.value === DEFAULT_VALUE;
   }
+  return housingGuestsList.value;
 };
 
-const filterByFeatures = (offer) => {
-  const housingFeatures = document.getElementById('housing-features').getElementsByTagName('input');
+const filterByFeatures = (offers) => {
+  const checkedFeatures = housingFeaturesList.querySelectorAll('[name="features"]:checked');
   const featuresValues = [];
 
-  for (let i = 0, j = housingFeatures.length; i < j; ++i) {
-    featuresValues.push(housingFeatures[i].value);
+  if (offers.offer.features) {
+    checkedFeatures.forEach((element) => {
+      featuresValues.push(element.value);
+    });
+    return featuresValues.every((element) => offers.offer.features.includes(element));
   }
-
-  if (!offer.offers.features) {
-    return false;
-  }
-
-  return featuresValues.every((index) => offer.offers.features.include(index));
 };
 
-const filterOffers = (offers) => offers.filter((offer) => filterByType(offer) && filterByPrice(offer)
-  && filterByRooms(offer) && filterByGuests(offer) && filterByFeatures(offer));
+const filterOffers = ((offers) => {
+  const filteredOffers = offers.filter((offer) => filterByType(offer) && filterByPrice(offer)
+    && filterByRooms(offer) && filterByGuests(offer) && filterByFeatures(offer));
 
-const setFilterOffers = (offers) => {
-  mapFilters.addEventListener('change', debounce(() => filterOffers(offers)));
+  return filteredOffers;
+});
+
+const createFilteredOffers = (offers) => {
+  const filteredOffers = filterOffers(offers);
+  getOffersMark(filteredOffers);
 };
 
-export { setFilterOffers };
+const setFilterListener = (offers) => {
+  mapFilters.addEventListener('change', debounce(() => createFilteredOffers(offers)));
+};
+
+export { setFilterListener };

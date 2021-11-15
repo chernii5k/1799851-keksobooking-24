@@ -1,18 +1,15 @@
 import './map.js';
-import './show-message.js';
 
 import { setUserFormSubmit } from './form.js';
 import { getData } from './api.js';
-import { getOffersMark } from './map.js';
-import { setFilterOffers } from './filter.js';
-
-let data = [];
+import { data } from './data.js';
+import { setFilterListener } from './filter.js';
+import { showAlert } from './show-message.js';
 
 getData((offers) => {
-  data = offers;
-  const sliceOffers = data.slice(0, 10);
-  const filteredOffers = setFilterOffers(sliceOffers);
-  getOffersMark(filteredOffers);
-});
+  data.offers = offers;
+  const sliceData = data.offers.slice(0, 10);
+  setFilterListener(sliceData);
+}, showAlert);
 
 setUserFormSubmit();
