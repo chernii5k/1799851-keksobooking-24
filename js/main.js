@@ -1,4 +1,5 @@
 import './map.js';
+import './filter.js';
 
 import { setUserFormSubmit } from './form.js';
 import { getData } from './api.js';
@@ -8,8 +9,8 @@ import { showAlert } from './show-message.js';
 
 getData((offers) => {
   data.offers = offers;
-  const sliceData = data.offers.slice(0, 10);
-  setFilterListener(sliceData);
+  const newData = data.offers.slice(0, 10);
+  setFilterListener(newData);
 }, showAlert);
 
 setUserFormSubmit();

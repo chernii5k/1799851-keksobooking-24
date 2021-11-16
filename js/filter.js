@@ -1,4 +1,4 @@
-import { getOffersMark } from './map.js';
+import { getOffersMark, markerGroup } from './map.js';
 import { debounce } from './utils/debounce.js';
 
 const mapFilters = document.querySelector('.map__filters');
@@ -6,73 +6,93 @@ const housingTypeList = mapFilters.querySelector('#housing-type');
 const housingPriceList = mapFilters.querySelector('#housing-price');
 const housingGuestsList = mapFilters.querySelector('#housing-guests');
 const housingRoomsList = mapFilters.querySelector('#housing-rooms');
-const housingFeaturesList = mapFilters.querySelector('#housing-features');
 const DEFAULT_VALUE = 'any';
+const PRICE_MIN = 10000;
+const PRICE_MAX = 50000;
 
-const filterByType = (offer) => {
-  if (offer.offer.type) {
-    housingTypeList.value === offer.offer.type;
-  } else {
-    housingTypeList.value === DEFAULT_VALUE;
+// Фильтр по типу жилья
+
+const filterByType = (advert) => {
+  if (housingTypeList.value === DEFAULT_VALUE) {
+    return true;
   }
-  return housingTypeList.value;
+  return advert.offer.type === housingTypeList.value;
 };
 
-const filterByPrice = (offer) => {
-  if (offer.offer.price === 0) {
-    housingPriceList.value === DEFAULT_VALUE;
-  } else {
-    offer.offer.price < 10000 && housingPriceList.value === 'low' ||
-      offer.offer.price >= 10000 && offer.offer.price < 50000 && housingPriceList.value === 'middle' ||
-      offer.offer.price >= 50000 && housingPriceList.value === 'high';
+// Фильтр по цене
+
+const filterByPrice = (advert) => {
+  switch (housingPriceList.value) {
+    case 'low':
+      return advert.offer.price < PRICE_MIN;
+    case 'middle':
+      return PRICE_MIN <= advert.offer.price <= PRICE_MAX;
+    case 'high':
+      return advert.offer.price >= PRICE_MAX;
+    default:
+      return true;
   }
-  return housingPriceList.value;
 };
 
-const filterByRooms = (offer) => {
-  if (offer.offer.rooms) {
-    String(offer.offer.rooms) === housingRoomsList.value;
-  } else {
-    housingRoomsList.value === DEFAULT_VALUE;
+// Фильтр по количеству комнат
+
+const filterByRooms = (advert) => {
+  switch (housingRoomsList.value) {
+    case '1':
+      return 1 <= advert.offer.rooms;
+    case '2':
+      return 2 <= advert.offer.rooms;
+    case '3':
+      return 3 <= advert.offer.rooms;
+    default:
+      return true;
   }
-  return housingRoomsList.value;
 };
 
-const filterByGuests = (offer) => {
-  if (offer.offer.guests) {
-    String(offer.offer.guests) === housingGuestsList.value;
-  } else {
-    housingGuestsList.value === DEFAULT_VALUE;
+// Фильтр по количеству гостей
+
+const filterByGuests = (advert) => {
+  switch (housingGuestsList) {
+    case '0':
+      return 0 === advert.offer.guests;
+    case '1':
+      return 1 <= advert.offer.guests;
+    case '2':
+      return 2 <= advert.offer.guests;
+    case '3':
+      return 3 <= advert.offer.guests;
+    default:
+      return true;
   }
-  return housingGuestsList.value;
 };
 
-const filterByFeatures = (offers) => {
-  const checkedFeatures = housingFeaturesList.querySelectorAll('[name="features"]:checked');
-  const featuresValues = [];
+// Фильтр по наличию удобств
 
-  if (offers.offer.features) {
-    checkedFeatures.forEach((element) => {
-      featuresValues.push(element.value);
-    });
-    return featuresValues.every((element) => offers.offer.features.includes(element));
+const filterByFeatures = (advert) => {
+  const checkedFeatures = document.querySelectorAll('input[name="features"]:checked');
+
+  if (!advert.offer.features) {
+    return false;
   }
+
+  return Array.from(checkedFeatures).every((feature) => advert.offer.features.includes(feature.value));
 };
 
 const filterOffers = ((offers) => {
-  const filteredOffers = offers.filter((offer) => filterByType(offer) && filterByPrice(offer)
-    && filterByRooms(offer) && filterByGuests(offer) && filterByFeatures(offer));
+  const filteredOffers = offers.filter((advert) => filterByType(advert) && filterByPrice
+    && filterByRooms(advert) && filterByGuests(advert) && filterByFeatures(advert));
 
   return filteredOffers;
 });
 
 const createFilteredOffers = (offers) => {
-  const filteredOffers = filterOffers(offers);
-  getOffersMark(filteredOffers);
+  const getFilteredOffers = filterOffers(offers);
+  markerGroup.clearLayers();
+  getOffersMark(getFilteredOffers);
 };
 
 const setFilterListener = (offers) => {
   mapFilters.addEventListener('change', debounce(() => createFilteredOffers(offers)));
 };
 
-export { setFilterListener };
+export { setFilterListener, filterOffers };

@@ -5,6 +5,7 @@ import { renderCard } from './render-card.js';
 const latCoordinates = 35.658581.toFixed(5);
 const lngCoordinates = 139.745438.toFixed(5);
 
+
 // Главная и основные метки
 
 const mainPinIcon = L.icon({
@@ -107,4 +108,4 @@ const returnMarker = () => {
   }, 11);
 };
 
-export { getOffersMark, mainMarker, returnMarker, latCoordinates, lngCoordinates };
+export { getOffersMark, mainMarker, returnMarker, latCoordinates, lngCoordinates, markerGroup };
