@@ -1,6 +1,6 @@
 import { sendData } from './api.js';
 import { showMessageSuccess, showMessageError, openMessageModal } from './show-message.js';
-import { returnMarker, latCoordinates, lngCoordinates } from './map.js';
+import { returnMarker, latCoordinates, lngCoordinates, markerGroup } from './map.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -66,6 +66,14 @@ const removeMapFiltersDisabled = () => {
 
 addFormDisabled();
 addMapFiltersDisabled();
+
+// Переход формы в активное состояние
+
+const removeDisabled = () => {
+  removeFormDisabled();
+  removeMapFiltersDisabled();
+};
+
 
 // Заголовок объявления
 
@@ -160,13 +168,6 @@ typeHouse.addEventListener('change', (evt) => {
   setMinHousingPrice(minPrice[evt.target.value]);
 });
 
-// Переход формы в активное состояние
-
-const removeDisabled = () => {
-  removeFormDisabled();
-  removeMapFiltersDisabled();
-};
-
 // Очистка формы при успешной отправке
 
 const clearForm = () => {
@@ -202,6 +203,7 @@ const setUserFormSubmit = () => {
 clearFormButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   clearForm();
+  markerGroup.clearLayers();
 });
 
 export { removeDisabled, setUserFormSubmit, inputAddress };
