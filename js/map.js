@@ -30,7 +30,7 @@ const map = L.map('map-canvas')
   .setView({
     lat: latCoordinates,
     lng: lngCoordinates,
-  }, 11);
+  }, 12);
 
 
 // Отрисовка слоя

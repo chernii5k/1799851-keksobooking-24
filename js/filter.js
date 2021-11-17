@@ -26,7 +26,7 @@ const filterByPrice = (advert) => {
     case 'low':
       return advert.offer.price < PRICE_MIN;
     case 'middle':
-      return PRICE_MIN <= advert.offer.price <= PRICE_MAX;
+      return advert.offer.price >= PRICE_MIN && advert.offer.price <= PRICE_MAX;
     case 'high':
       return advert.offer.price >= PRICE_MAX;
     default:
@@ -79,7 +79,7 @@ const filterByFeatures = (advert) => {
 };
 
 const filterOffers = ((offers) => {
-  const filteredOffers = offers.filter((advert) => filterByType(advert) && filterByPrice
+  const filteredOffers = offers.filter((advert) => filterByType(advert) && filterByPrice(advert)
     && filterByRooms(advert) && filterByGuests(advert) && filterByFeatures(advert));
 
   return filteredOffers;
@@ -95,4 +95,4 @@ const setFilterListener = (offers) => {
   mapFilters.addEventListener('change', debounce(() => createFilteredOffers(offers)));
 };
 
-export { setFilterListener, filterOffers };
+export { setFilterListener };
