@@ -109,12 +109,12 @@ priceInput.addEventListener('input', () => {
 
 // Поле «Количество комнат» синхронизировано с полем «Количество гостей»
 
-const defaultCapacity = () => {
+const setDefaultCapacity = () => {
   capacityItem[3].setAttribute('disabled', true);
   capacityItem[0].setAttribute('disabled', true);
 };
 
-window.addEventListener('load', defaultCapacity);
+window.addEventListener('load', setDefaultCapacity);
 
 const checkGuestsCapacity = () => {
   if (selectRoomsElem.value === '1') {
@@ -170,7 +170,7 @@ typeHouse.addEventListener('change', (evt) => {
 
 // Очистка формы при успешной отправке
 
-const clearForm = () => {
+const getClearForm = () => {
   adForm.reset();
   formFilters.reset();
   returnMarker();
@@ -185,7 +185,7 @@ const setUserFormSubmit = () => {
 
     sendData(
       () => {
-        clearForm();
+        getClearForm();
         showMessageSuccess();
         openMessageModal();
       },
@@ -202,7 +202,7 @@ const setUserFormSubmit = () => {
 
 clearFormButton.addEventListener('click', (evt) => {
   evt.preventDefault();
-  clearForm();
+  getClearForm();
   markerGroup.clearLayers();
 });
 
