@@ -10,9 +10,8 @@ import { getOffersMark } from './map.js';
 
 getData((offers) => {
   data.offers = offers;
-  const newData = data.offers.slice(0, 10);
-  getOffersMark(newData);
-  setFilterListener(newData);
+  getOffersMark(data.offers.slice(0, 10));
+  setFilterListener(data.offers);
 }, showAlert);
 
 setUserFormSubmit();

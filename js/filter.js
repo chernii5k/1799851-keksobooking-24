@@ -88,7 +88,7 @@ const filterOffers = ((offers) => {
 const createFilteredOffers = (offers) => {
   const getFilteredOffers = filterOffers(offers);
   markerGroup.clearLayers();
-  getOffersMark(getFilteredOffers);
+  getOffersMark(getFilteredOffers.slice(0, 10));
 };
 
 const setFilterListener = (offers) => {
