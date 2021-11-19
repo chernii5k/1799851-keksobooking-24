@@ -1,4 +1,4 @@
-import { removeDisabled, inputAddress } from './form.js';
+import { removeDisabled, inputAddress, addLoadFiles } from './form.js';
 import { renderCard } from './render-card.js';
 
 
@@ -18,29 +18,7 @@ const secondaryPinIcon = L.icon({
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
-
-// Карта, переход в активное состояние
-
-const map = L.map('map-canvas')
-  .on('load', () => {
-    removeDisabled();
-
-    inputAddress.value = `Latitude ${latCoordinates}, Longitude ${lngCoordinates}`;
-  })
-  .setView({
-    lat: latCoordinates,
-    lng: lngCoordinates,
-  }, 12);
-
-
-// Отрисовка слоя
-
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
+const map = L.map('map-canvas');
 
 // Основная метка
 
@@ -56,6 +34,41 @@ const mainMarker = L.marker(
 );
 
 mainMarker.addTo(map);
+
+// Карта, переход в активное состояние
+
+const loadMap = () => {
+  map.on('load', () => {
+    addLoadFiles();
+    removeDisabled();
+
+    inputAddress.value = `Latitude ${latCoordinates}, Longitude ${lngCoordinates}`;
+  })
+    .setView({
+      lat: latCoordinates,
+      lng: lngCoordinates,
+    }, 12);
+
+  // Отрисовка слоя
+
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
+
+  // Выбор адреса путем перемещения метки
+
+  mainMarker.on('moveend', (evt) => {
+    const addressValue = () => {
+      const moveEndLat = evt.target.getLatLng().lat;
+      const moveEndLng = evt.target.getLatLng().lng;
+      inputAddress.value = `Latitude ${moveEndLat.toFixed(5)}, Longitude ${moveEndLng.toFixed(5)}`;
+    };
+    addressValue();
+  });
+};
 
 // Группа меток
 
@@ -83,17 +96,6 @@ const getOffersMark = (points) => {
   });
 };
 
-// Выбор адреса путем перемещения метки
-
-mainMarker.on('moveend', (evt) => {
-  const addressValue = () => {
-    const moveEndLat = evt.target.getLatLng().lat;
-    const moveEndLng = evt.target.getLatLng().lng;
-    inputAddress.value = `Latitude ${moveEndLat.toFixed(5)}, Longitude ${moveEndLng.toFixed(5)}`;
-  };
-  addressValue();
-});
-
 // Возврат метки в исходное состояние
 
 const returnMarker = () => {
@@ -108,4 +110,4 @@ const returnMarker = () => {
   }, 11);
 };
 
-export { getOffersMark, mainMarker, returnMarker, latCoordinates, lngCoordinates, markerGroup };
+export { getOffersMark, mainMarker, returnMarker, latCoordinates, lngCoordinates, markerGroup, loadMap };

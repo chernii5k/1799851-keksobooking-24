@@ -36,35 +36,11 @@ const filterByPrice = (advert) => {
 
 // Фильтр по количеству комнат
 
-const filterByRooms = (advert) => {
-  switch (housingRoomsList.value) {
-    case '1':
-      return 1 <= advert.offer.rooms;
-    case '2':
-      return 2 <= advert.offer.rooms;
-    case '3':
-      return 3 <= advert.offer.rooms;
-    default:
-      return true;
-  }
-};
+const filterByRooms = (advert) => (housingRoomsList.value === advert.offer.rooms.toString()) || (housingRoomsList.value === DEFAULT_VALUE);
 
 // Фильтр по количеству гостей
 
-const filterByGuests = (advert) => {
-  switch (housingGuestsList) {
-    case '0':
-      return 0 === advert.offer.guests;
-    case '1':
-      return 1 <= advert.offer.guests;
-    case '2':
-      return 2 <= advert.offer.guests;
-    case '3':
-      return 3 <= advert.offer.guests;
-    default:
-      return true;
-  }
-};
+const filterByGuests = (advert) => (housingGuestsList.value === advert.offer.guests.toString()) || (housingGuestsList.value === DEFAULT_VALUE);
 
 // Фильтр по наличию удобств
 
