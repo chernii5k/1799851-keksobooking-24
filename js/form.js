@@ -188,7 +188,7 @@ const checkTypeHousing = () => {
 
 // Очистка формы при успешной отправке
 
-const clearForm = () => {
+const getClearForm = () => {
   adForm.reset();
   formFilters.reset();
   returnMarker();
@@ -238,7 +238,7 @@ const setUserFormSubmit = () => {
 
     sendData(
       () => {
-        clearForm();
+        getClearForm();
         showMessageSuccess();
         openMessageModal();
         map.closePopup();
@@ -256,7 +256,7 @@ const setUserFormSubmit = () => {
 
 clearFormButton.addEventListener('click', (evt) => {
   evt.preventDefault();
-  clearForm();
+  getClearForm();
   map.closePopup();
 
   const photoHousingElement = photoHousingLoadElement.querySelector('img');

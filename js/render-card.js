@@ -1,4 +1,4 @@
-const typeOfHousingMap = {
+const typeOfHousing = {
   palace: 'Дворец',
   flat: 'Квартира',
   house: 'Дом',
@@ -68,7 +68,7 @@ const renderCard = (element) => {
     offerPrice.classList.add('hidden');
   }
   if (element.offer.type) {
-    offerType.textContent = typeOfHousingMap[element.offer.type];
+    offerType.textContent = typeOfHousing[element.offer.type];
   } else {
     offerType.classList.add('hidden');
   }
