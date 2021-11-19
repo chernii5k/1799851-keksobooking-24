@@ -1,11 +1,11 @@
 import { sendData } from './api.js';
 import { showMessageSuccess, showMessageError, openMessageModal } from './show-message.js';
-import { returnMarker, latCoordinates, lngCoordinates } from './map.js';
+import { returnMarker, latCoordinates, lngCoordinates, map } from './map.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const titleInput = document.querySelector('.ad-form__advert');
-const typeHouse = document.querySelector('#type');
+const typeHousing = document.querySelector('#type');
 const minPrice = {
   bungalow: 0,
   flat: 1000,
@@ -171,7 +171,7 @@ const checkTimeInOut = () => {
   });
 };
 
-// Поле "Тип жилья" влияет на минимальное значение поля "Цена за ночь"
+// Устанавливает минимальную цену при размещении объявления
 
 function setMinHousingPrice(price) {
   priceInput.min = price;
@@ -180,9 +180,11 @@ function setMinHousingPrice(price) {
 
 // Устанавливает минимальную цену по типу жилья
 
-typeHouse.addEventListener('change', (evt) => {
-  setMinHousingPrice(minPrice[evt.target.value]);
-});
+const checkTypeHousing = () => {
+  typeHousing.addEventListener('change', (evt) => {
+    setMinHousingPrice(minPrice[evt.target.value]);
+  });
+};
 
 // Очистка формы при успешной отправке
 
@@ -239,6 +241,7 @@ const setUserFormSubmit = () => {
         clearForm();
         showMessageSuccess();
         openMessageModal();
+        map.closePopup();
       },
       () => {
         showMessageError();
@@ -254,6 +257,7 @@ const setUserFormSubmit = () => {
 clearFormButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   clearForm();
+  map.closePopup();
 
   const photoHousingElement = photoHousingLoadElement.querySelector('img');
   if (photoHousingElement) {
@@ -263,11 +267,14 @@ clearFormButton.addEventListener('click', (evt) => {
   avatarLoadElement.src = DEFAULT_SRC_AVATAR;
 });
 
+// Валидация формы
+
 const checkValidationForm = () => {
   checkTitleInput();
   checkPriceInput();
   checkGuestsCapacity();
   checkTimeInOut();
+  checkTypeHousing();
 };
 
 export { removeDisabled, setUserFormSubmit, inputAddress, addMainFormDisabled, addLoadFiles, addMapFiltersDisabled, checkValidationForm };

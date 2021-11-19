@@ -60,7 +60,7 @@ const loadMap = () => {
 
   // Выбор адреса путем перемещения метки
 
-  mainMarker.on('moveend', (evt) => {
+  mainMarker.on('mousemove', (evt) => {
     const addressValue = () => {
       const moveEndLat = evt.target.getLatLng().lat;
       const moveEndLng = evt.target.getLatLng().lng;
@@ -110,4 +110,4 @@ const returnMarker = () => {
   }, 11);
 };
 
-export { getOffersMark, mainMarker, returnMarker, latCoordinates, lngCoordinates, markerGroup, loadMap };
+export { getOffersMark, mainMarker, returnMarker, latCoordinates, lngCoordinates, markerGroup, loadMap, map };
