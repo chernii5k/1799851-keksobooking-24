@@ -4,19 +4,21 @@ import { renderCard } from './render-card.js';
 const latCoordinates = 35.658581.toFixed(5);
 const lngCoordinates = 139.745438.toFixed(5);
 
-
 // Главная и основные метки
 
 const mainPinIcon = L.icon({
+
   iconUrl: 'img/main-pin.svg',
   iconSize: [52, 52],
   iconAnchor: [26, 52],
 });
+
 const secondaryPinIcon = L.icon({
   iconUrl: 'img/pin.svg',
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
+
 const map = L.map('map-canvas');
 
 // Основная метка
