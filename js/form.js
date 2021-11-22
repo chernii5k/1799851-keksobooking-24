@@ -15,6 +15,12 @@ const MinPrice = {
   HOUSE: 5000,
   PALACE: 10000,
 };
+const RoomToCapacity = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0],
+};
 const IMAGE_ELEMENT_WIDTH = '70px';
 const IMAGE_ELEMENT_HEIGHT = '100%';
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
@@ -22,9 +28,8 @@ const DEFAULT_SRC_AVATAR = 'img/muffin-grey.svg';
 const titleInput = document.querySelector('.ad-form__advert');
 const typeHousing = document.querySelector('#type');
 const priceInput = document.querySelector('#price');
-const selectRoomsElem = document.querySelector('#room_number');
-const selectCapacityElem = document.querySelector('#capacity');
-const capacityItem = selectCapacityElem.querySelectorAll('option');
+const room = document.querySelector('select[name="rooms"]');
+const capacity = document.querySelector('select[name="capacity"]');
 const timeInElem = document.querySelector('#timein');
 const timeOutElem = document.querySelector('#timeout');
 const adForm = document.querySelector('.ad-form');
@@ -132,40 +137,21 @@ const checkPriceInput = () => {
 
 // Поле «Количество комнат» синхронизировано с полем «Количество гостей»
 
-const checkGuestsCapacity = () => {
-  capacityItem[0].setAttribute('disabled', true);
-  capacityItem[1].setAttribute('disabled', true);
-  capacityItem[3].setAttribute('disabled', true);
+const onRoomChange = () => {
 
-  selectRoomsElem.addEventListener('change', () => {
-
-    if (selectRoomsElem.value === '1') {
-      capacityItem[0].setAttribute('disabled', true);
-      capacityItem[2].removeAttribute('disabled');
-      capacityItem[3].setAttribute('disabled', true);
-      capacityItem[1].setAttribute('disabled', true);
-      selectCapacityElem.value = '1';
-    } else if (selectRoomsElem.value === '2') {
-      capacityItem[0].setAttribute('disabled', true);
-      capacityItem[1].removeAttribute('disabled');
-      capacityItem[2].removeAttribute('disabled');
-      capacityItem[3].setAttribute('disabled', true);
-      selectCapacityElem.value = '2';
-    } else if (selectRoomsElem.value === '3') {
-      capacityItem[0].removeAttribute('disabled');
-      capacityItem[1].removeAttribute('disabled');
-      capacityItem[2].removeAttribute('disabled');
-      capacityItem[3].setAttribute('disabled', true);
-      selectCapacityElem.value = '3';
-    } else if (selectRoomsElem.value === '100') {
-      capacityItem[0].setAttribute('disabled', true);
-      capacityItem[1].setAttribute('disabled', true);
-      capacityItem[2].setAttribute('disabled', true);
-      capacityItem[3].removeAttribute('disabled');
-      selectCapacityElem.value = '0';
+  for (let i = 0; i < capacity.children.length; i++) {
+    const option = capacity.children[i];
+    option.disabled = true;
+    const capacityValues = RoomToCapacity[room.value];
+    for (let j = 0; j < capacityValues.length; j++) {
+      if (+option.value === capacityValues[j]) {
+        option.disabled = false;
+        option.selected = true;
+      }
     }
-  });
+  }
 };
+room.addEventListener('change', onRoomChange);
 
 // Поля «Время заезда» и «Время выезда» синхронизированы
 
@@ -262,6 +248,17 @@ const setUserFormSubmit = () => {
   });
 };
 
+// Валидация формы
+
+const checkValidationForm = () => {
+  checkTitleInput();
+  checkPriceInput();
+  onRoomChange();
+  checkTimeInOut();
+  checkTypeHousing();
+};
+
+
 // Кнопка очистки формы
 
 clearFormButton.addEventListener('click', (evt) => {
@@ -277,16 +274,7 @@ clearFormButton.addEventListener('click', (evt) => {
   }
 
   avatarLoadElement.src = DEFAULT_SRC_AVATAR;
+  checkValidationForm();
 });
-
-// Валидация формы
-
-const checkValidationForm = () => {
-  checkTitleInput();
-  checkPriceInput();
-  checkGuestsCapacity();
-  checkTimeInOut();
-  checkTypeHousing();
-};
 
 export { removeDisabled, setUserFormSubmit, inputAddress, addMainFormDisabled, addLoadFiles, addMapFiltersDisabled, checkValidationForm };
