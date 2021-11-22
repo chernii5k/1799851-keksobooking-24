@@ -1,20 +1,26 @@
 import { sendData } from './api.js';
 import { showMessageSuccess, showMessageError, openMessageModal } from './show-message.js';
-import { returnMarker, latCoordinates, lngCoordinates, map } from './map.js';
+import { returnMarker, LAT_COORDINATES, LNG_COORDINATES, map, markerGroup } from './map.js';
+import { initMap } from './main.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
-const titleInput = document.querySelector('.ad-form__advert');
-const typeHousing = document.querySelector('#type');
-const minPrice = {
-  bungalow: 0,
-  flat: 1000,
-  hotel: 3000,
-  house: 5000,
-  palace: 10000,
-};
 const MAX_PRICE = 1000000;
 const MIN_PRICE = 1000;
+const DEFAULT_INPUT_PRICE_VALUE = 1000;
+const MinPrice = {
+  BUNGALOW: 0,
+  FLAT: 1000,
+  HOTEL: 3000,
+  HOUSE: 5000,
+  PALACE: 10000,
+};
+const IMAGE_ELEMENT_WIDTH = '70px';
+const IMAGE_ELEMENT_HEIGHT = '100%';
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const DEFAULT_SRC_AVATAR = 'img/muffin-grey.svg';
+const titleInput = document.querySelector('.ad-form__advert');
+const typeHousing = document.querySelector('#type');
 const priceInput = document.querySelector('#price');
 const selectRoomsElem = document.querySelector('#room_number');
 const selectCapacityElem = document.querySelector('#capacity');
@@ -32,8 +38,6 @@ const avatarFileChooser = document.querySelector('.ad-form__field input[type="fi
 const avatarLoadElement = document.querySelector('.ad-form-header__preview img');
 const photoHousingFileChooser = document.querySelector('.ad-form__upload input[type="file"]');
 const photoHousingLoadElement = document.querySelector('.ad-form__photo');
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
-const DEFAULT_SRC_AVATAR = 'img/muffin-grey.svg';
 
 // Состояния страницы (активное, неактивное)
 
@@ -110,7 +114,9 @@ const checkTitleInput = () => {
 const checkPriceInput = () => {
   priceInput.addEventListener('input', () => {
 
-    if (priceInput.value > MAX_PRICE) {
+    if (priceInput.min === '0') {
+      priceInput.setCustomValidity('');
+    } else if (priceInput.value > MAX_PRICE) {
       priceInput.setCustomValidity(`Максимальная цена ${MAX_PRICE}`);
     } else if (priceInput.value.valueMissing) {
       priceInput.setCustomValidity('Обязательное поле');
@@ -127,8 +133,9 @@ const checkPriceInput = () => {
 // Поле «Количество комнат» синхронизировано с полем «Количество гостей»
 
 const checkGuestsCapacity = () => {
-  capacityItem[3].setAttribute('disabled', true);
   capacityItem[0].setAttribute('disabled', true);
+  capacityItem[1].setAttribute('disabled', true);
+  capacityItem[3].setAttribute('disabled', true);
 
   selectRoomsElem.addEventListener('change', () => {
 
@@ -136,6 +143,7 @@ const checkGuestsCapacity = () => {
       capacityItem[0].setAttribute('disabled', true);
       capacityItem[2].removeAttribute('disabled');
       capacityItem[3].setAttribute('disabled', true);
+      capacityItem[1].setAttribute('disabled', true);
       selectCapacityElem.value = '1';
     } else if (selectRoomsElem.value === '2') {
       capacityItem[0].setAttribute('disabled', true);
@@ -173,16 +181,16 @@ const checkTimeInOut = () => {
 
 // Устанавливает минимальную цену при размещении объявления
 
-function setMinHousingPrice(price) {
+const setMinHousingPrice = (price) => {
   priceInput.min = price;
   priceInput.placeholder = price;
-}
+};
 
 // Устанавливает минимальную цену по типу жилья
 
 const checkTypeHousing = () => {
   typeHousing.addEventListener('change', (evt) => {
-    setMinHousingPrice(minPrice[evt.target.value]);
+    setMinHousingPrice(MinPrice[evt.target.value.toUpperCase()]);
   });
 };
 
@@ -192,7 +200,9 @@ const getClearForm = () => {
   adForm.reset();
   formFilters.reset();
   returnMarker();
-  inputAddress.value = `Latitude ${latCoordinates}, Longitude ${lngCoordinates}`;
+  priceInput.min = DEFAULT_INPUT_PRICE_VALUE;
+  priceInput.placeholder = DEFAULT_INPUT_PRICE_VALUE;
+  inputAddress.value = `Latitude ${LAT_COORDINATES}, Longitude ${LNG_COORDINATES}`;
 };
 
 // Добавляет аватарку пользователя и фотографию жилья
@@ -223,8 +233,8 @@ const addLoadFiles = () => {
       }
       const imageElement = document.createElement('img');
       imageElement.src = URL.createObjectURL(file);
-      imageElement.style.width = '70px';
-      imageElement.style.height = '100%';
+      imageElement.style.width = IMAGE_ELEMENT_WIDTH;
+      imageElement.style.height = IMAGE_ELEMENT_HEIGHT;
       photoHousingLoadElement.appendChild(imageElement);
     }
   });
@@ -258,6 +268,8 @@ clearFormButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   getClearForm();
   map.closePopup();
+  markerGroup.clearLayers();
+  initMap();
 
   const photoHousingElement = photoHousingLoadElement.querySelector('img');
   if (photoHousingElement) {

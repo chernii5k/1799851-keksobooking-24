@@ -1,22 +1,27 @@
 import { removeDisabled, inputAddress, addLoadFiles } from './form.js';
 import { renderCard } from './render-card.js';
 
-const latCoordinates = 35.658581.toFixed(5);
-const lngCoordinates = 139.745438.toFixed(5);
+const LAT_COORDINATES = 35.65858;
+const LNG_COORDINATES = 139.74543;
+const MAIN_ICON_SIZE = [52, 52];
+const MAIN_ANCHOR_SIZE = [26, 52];
+const SECONDARY_ICON_SIZE = [40, 40];
+const SECONDARY_ANCHOR_SIZE = [20, 40];
+
 
 // Главная и основные метки
 
 const mainPinIcon = L.icon({
 
   iconUrl: 'img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconSize: MAIN_ICON_SIZE,
+  iconAnchor: MAIN_ANCHOR_SIZE,
 });
 
 const secondaryPinIcon = L.icon({
   iconUrl: 'img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: SECONDARY_ICON_SIZE,
+  iconAnchor: SECONDARY_ANCHOR_SIZE,
 });
 
 const map = L.map('map-canvas');
@@ -25,8 +30,8 @@ const map = L.map('map-canvas');
 
 const mainMarker = L.marker(
   {
-    lat: latCoordinates,
-    lng: lngCoordinates,
+    lat: LAT_COORDINATES,
+    lng: LNG_COORDINATES,
   },
   {
     draggable: true,
@@ -43,11 +48,11 @@ const loadMap = () => {
     addLoadFiles();
     removeDisabled();
 
-    inputAddress.value = `Latitude ${latCoordinates}, Longitude ${lngCoordinates}`;
+    inputAddress.value = `Latitude ${LAT_COORDINATES}, Longitude ${LNG_COORDINATES}`;
   })
     .setView({
-      lat: latCoordinates,
-      lng: lngCoordinates,
+      lat: LAT_COORDINATES,
+      lng: LNG_COORDINATES,
     }, 12);
 
   // Отрисовка слоя
@@ -101,14 +106,14 @@ const getOffersMark = (points) => {
 
 const returnMarker = () => {
   mainMarker.setLatLng({
-    lat: latCoordinates,
-    lng: lngCoordinates,
+    lat: LAT_COORDINATES,
+    lng: LNG_COORDINATES,
   });
 
   map.setView({
-    lat: latCoordinates,
-    lng: lngCoordinates,
-  }, 11);
+    lat: LAT_COORDINATES,
+    lng: LNG_COORDINATES,
+  }, 12);
 };
 
-export { getOffersMark, mainMarker, returnMarker, latCoordinates, lngCoordinates, markerGroup, loadMap, map };
+export { getOffersMark, mainMarker, returnMarker, LAT_COORDINATES, LNG_COORDINATES, markerGroup, loadMap, map };

@@ -1,11 +1,24 @@
+const SHOW_TIME_MESSAGE = 5000;
+
 const successContainer = document.querySelector('#success').content.querySelector('.success');
 const successMessageElement = successContainer.cloneNode(true);
 const errorContainer = document.querySelector('#error').content.querySelector('.error');
 const errorMessageElement = errorContainer.cloneNode(true);
 const errorButton = document.querySelector('#error').content.querySelector('.error__button');
-const SHOW_TIME_MESSAGE = 5000;
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
+
+const openMessageModal = () => {
+  successMessageElement.classList.remove('hidden');
+  errorMessageElement.classList.remove('hidden');
+  document.addEventListener('keydown', onMessageEscKeydown);
+};
+
+const closeMessageModal = () => {
+  successMessageElement.classList.add('hidden');
+  errorMessageElement.classList.add('hidden');
+  document.removeEventListener('keydown', onMessageEscKeydown);
+};
 
 function onMessageEscKeydown(evt) {
   if (isEscapeKey(evt)) {
@@ -18,18 +31,6 @@ errorButton.addEventListener('click', () => {
   closeMessageModal();
 });
 
-function openMessageModal() {
-  successMessageElement.classList.remove('hidden');
-  errorMessageElement.classList.remove('hidden');
-  document.addEventListener('keydown', onMessageEscKeydown);
-}
-
-function closeMessageModal() {
-  successMessageElement.classList.add('hidden');
-  errorMessageElement.classList.add('hidden');
-  document.removeEventListener('keydown', onMessageEscKeydown);
-}
-
 window.onclick = (evt) => {
   if (evt.target !== successContainer && errorContainer) {
     closeMessageModal();
@@ -38,20 +39,12 @@ window.onclick = (evt) => {
 
 const showMessageSuccess = () => {
   document.body.append(successMessageElement);
-  successMessageElement.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      closeMessageModal();
-    }
-  });
+  successMessageElement.addEventListener('keydown', closeMessageModal);
 };
 
 const showMessageError = () => {
   document.body.append(errorMessageElement);
-  errorMessageElement.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      closeMessageModal();
-    }
-  });
+  errorMessageElement.addEventListener('keydown', closeMessageModal);
 };
 
 const showAlert = (message) => {

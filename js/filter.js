@@ -1,14 +1,15 @@
 import { getOffersMark, markerGroup } from './map.js';
 import { debounce } from './utils/debounce.js';
 
+const DEFAULT_VALUE = 'any';
+const PRICE_MIN = 10000;
+const PRICE_MAX = 50000;
 const mapFilters = document.querySelector('.map__filters');
 const housingTypeList = mapFilters.querySelector('#housing-type');
 const housingPriceList = mapFilters.querySelector('#housing-price');
 const housingGuestsList = mapFilters.querySelector('#housing-guests');
 const housingRoomsList = mapFilters.querySelector('#housing-rooms');
-const DEFAULT_VALUE = 'any';
-const PRICE_MIN = 10000;
-const PRICE_MAX = 50000;
+
 
 // Фильтр по типу жилья
 

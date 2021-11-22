@@ -1,6 +1,5 @@
-const data = {
-  offers: [],
+const Data = {
+  OFFERS: [],
 };
 
-export {data};
-
+export { Data };
